@@ -1,0 +1,35 @@
+# docker-compose for Pontoon
+#
+# Note: Requires docker-compose 1.10+.
+version: '2.3'
+services:
+  server:
+    image: local/pontoon
+    env_file:
+      - server.env
+    depends_on:
+      - postgresql
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./work/pontoon:/app/pontoon
+      - ./work/requirements:/app/requirements
+      - ./work/tag-admin:/app/tag-admin
+      - ./work/translate:/app/translate
+      - ~/.ssh:/home/pontoon/.ssh
+
+  # Database
+  postgresql:
+    image: local/postgresql
+    hostname: postgresql
+    environment:
+      # Create the superuser account
+      - POSTGRES_USER=pontoon
+      - POSTGRES_PASSWORD=asdf
+      - POSTGRES_DB=pontoon
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+# Persist database
+volumes:
+  pgdata: null

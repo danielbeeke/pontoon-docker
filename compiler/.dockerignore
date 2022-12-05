@@ -1,0 +1,4 @@
+.dockerignore
+Dockerfile
+builder.sh
+00-Readme.txt
