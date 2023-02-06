@@ -20,17 +20,16 @@ __USAGE__
 }
 
 clean() {
-	docker images | grep -wE "^pontoon-compiler\s" | while read NAME TAG ID REST
+	docker images | grep -wE "^local/postgresql\s" | while read NAME TAG ID REST
 	do
 		docker rmi ${ID}
 	done
+
+	docker system prune -f
 }
 
 build() {
-	docker build \
-		-t pontoon-compiler:${VERSION_COMPILER} .
-
-	docker system prune -f
+	docker  build -f Dockerfile -t local/postgresql:${VERSION_POSTGRES} .
 }
 
 save() {

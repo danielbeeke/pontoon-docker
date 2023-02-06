@@ -1,5 +1,4 @@
 .dockerignore
 00-Readme.txt
-buildall.sh
 builder.sh
 Dockerfile

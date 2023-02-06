@@ -20,7 +20,7 @@ __USAGE__
 }
 
 clean() {
-	docker images | grep -wE "^pontoon-builder\s" | while read NAME TAG ID REST
+	docker images | grep -wE "^local/pontoon\s" | while read NAME TAG ID REST
 	do
 		docker rmi ${ID}
 	done
@@ -29,19 +29,7 @@ clean() {
 }
 
 build() {
-	rm -rf work
-	mkdir -pv work
-
-	docker run -ti --rm  -v $(pwd)/work:/work -v $(pwd)/00-buildall.sh:/usr/local/bin/buildall.sh -w /work -h builder pontoon-compiler:${VERSION_COMPILER} bash buildall.sh
-
-	cp -v server.env work/pontoon/docker/config/server.env
-	(cd work/pontoon
-	docker compose build --build-arg USER_ID=1000 --build-arg GROUP_ID=1000 server
-	)
-
-	(cd work/pontoon/docker/postgres
-	docker  build -f Dockerfile -t local/postgresql .
-	)
+	docker build -t local/pontoon:${VERSION_PONTOON} .
 }
 
 save() {

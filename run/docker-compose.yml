@@ -4,7 +4,7 @@
 version: '2.3'
 services:
   server:
-    image: local/pontoon
+    image: local/pontoon:1
     env_file:
       - server.env
     depends_on:
@@ -12,15 +12,18 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - ./work/pontoon:/app/pontoon
-      - ./work/requirements:/app/requirements
-      - ./work/tag-admin:/app/tag-admin
-      - ./work/translate:/app/translate
-      - ~/.ssh:/home/pontoon/.ssh
+       - ./server.env:/app/.env
+       - ./pontoon.settings:/app/pontoon.settings
+#      - ./work/pontoon:/app/pontoon
+#      - ./work/requirements:/app/requirements
+#      - ./work/tag-admin:/app/tag-admin
+#      - ./work/translate:/app/translate
+#      - ~/.ssh:/home/pontoon/.ssh
 
   # Database
   postgresql:
-    image: local/postgresql
+    image: postgres:13.4
+#    image: local/postgresql
     hostname: postgresql
     environment:
       # Create the superuser account
