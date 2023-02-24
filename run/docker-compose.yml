@@ -14,6 +14,7 @@ services:
     volumes:
        - ./server.env:/app/.env
        - ./pontoon.settings:/app/pontoon.settings
+       - ./base.py:/app/pontoon/settings/base.py
 #      - ./work/pontoon:/app/pontoon
 #      - ./work/requirements:/app/requirements
 #      - ./work/tag-admin:/app/tag-admin
